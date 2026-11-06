@@ -1,0 +1,5 @@
+# Working dir efêmero das rodadas: NÃO versionar.
+# O artefato auditável é runs/<run-id>/sandbox-snapshot/, esse sim versionado.
+sandbox/*
+!sandbox/.gitkeep
+!sandbox/README.md

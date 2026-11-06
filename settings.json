@@ -1,0 +1,65 @@
+{
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "model": "opus",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$LOCALAPPDATA/Programs/Python/Python312/python.exe\" \"$HOME/.claude/hooks/dead-pointer.py\"",
+            "timeout": 15,
+            "statusMessage": "ponteiro morto"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$LOCALAPPDATA/Programs/Python/Python312/python.exe\" \"$HOME/.claude/hooks/turn-cost.py\"",
+            "timeout": 20,
+            "statusMessage": "custo do turno"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "session-report@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {},
+  "effortLevel": "xhigh",
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "medium"
+    },
+    "claude-sonnet-5": {
+      "effortLevel": "medium"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "xhigh"
+    },
+    "claude-sonnet-5-5": {
+      "effortLevel": "low"
+    }
+  },
+  "autoUpdatesChannel": "latest",
+  "theme": "dark",
+  "todoFeatureEnabled": true,
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true,
+  "autoMode": {
+    "allow": [
+      "$defaults"
+    ],
+    "soft_deny": [
+      "$defaults"
+    ]
+  }
+}

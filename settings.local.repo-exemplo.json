@@ -1,0 +1,110 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(graphify explain *)",
+      "Bash(graphify query *)",
+      "Bash(graphify path *)",
+      "Bash(graphify export *)",
+      "Bash(npx nx *)",
+      "Bash(pnpm nx *)",
+      "Bash(npx ngc *)",
+      "Bash(npx tsc *)",
+      "Bash(npx vitest *)",
+      "Bash(npx prettier *)",
+      "Bash(npx playwright *)",
+      "Bash(grep -rln *)",
+      "Bash(git check-ignore *)",
+      "Bash(git ls-tree *)",
+      "Bash(git fetch *)",
+      "Bash(git --no-pager diff --stat)",
+      "Bash(gh pr *)",
+      "Bash(gh run *)",
+      "Bash(gh api *)",
+      "Bash(python3 *)",
+      "Read(~/.claude/**)",
+      "Skill(struct-rules)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:skills.sh)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/git-stash-guard.sh\"",
+            "timeout": 10,
+            "statusMessage": "git-stash-guard"
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/graphify-gate.sh\"",
+            "timeout": 15,
+            "statusMessage": "graphify-gate"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/vitest-pool-gate.sh\"",
+            "timeout": 10,
+            "statusMessage": "vitest-pool-gate"
+          }
+        ]
+      },
+      {
+        "matcher": "Task|Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/route-a-no-subagent-guard.sh\"",
+            "timeout": 180,
+            "statusMessage": "route-a-guard"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$HOME/.claude/hooks/subagent-router.mjs\"",
+            "timeout": 10,
+            "statusMessage": "subagent-router"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/circuit-breaker.sh\"",
+            "timeout": 10,
+            "statusMessage": "circuit-breaker"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/stop-check.sh\"",
+            "timeout": 180,
+            "statusMessage": "any/typecheck"
+          }
+        ]
+      }
+    ]
+  }
+}
